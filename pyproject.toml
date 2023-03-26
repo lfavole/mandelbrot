@@ -1,0 +1,57 @@
+[build-system]
+requires = ["setuptools>=61.0.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "lf-mandelbrot"
+version = "0.1.0"
+description = "Paint the Mandelbrot set."
+readme = "README.md"
+authors = [{ name = "Real Python", email = "info@realpython.com" }]
+license = { file = "LICENSE" }
+classifiers = [
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python",
+    "Programming Language :: Python :: 3",
+]
+keywords = ["mandelbrot"]
+dependencies = [
+    "matplotlib",
+    "numpy",
+	"Pillow",
+]
+requires-python = ">=3.7"
+
+	[project.optional-dependencies]
+	build = ["build", "twine"]
+	dev = ["black", "bumpver", "isort", "pip-tools", "pytest"]
+
+	[project.urls]
+	Homepage = "https://github.com/lfavole/mandelbrot"
+
+	[project.scripts]
+	mandelbrot = "mandelbrot.__main__:main"
+	mb = "mandelbrot.__main__:main"
+	mandelbrot-plot = "mandelbrot.plot:main"
+	mb-plot = "mandelbrot.plot:main"
+
+[tool.bumpver]
+current_version = "1.1.1"
+version_pattern = "MAJOR.MINOR.PATCH"
+commit_message = "bump version {old_version} -> {new_version}"
+commit = true
+tag = true
+push = false
+
+    [tool.bumpver.file_patterns]
+    "pyproject.toml" = [
+        'current_version = "{version}"',
+        'version = "{version}"',
+    ]
+    "mandelbrot/__init__.py" = ["{version}"]
+
+[tool.isort]
+profile = "black"
+import_heading_stdlib = "Standard library imports"
+import_heading_thirdparty = "Third party imports"
+import_heading_firstparty = "Reader imports"

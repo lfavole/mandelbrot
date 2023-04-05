@@ -44,7 +44,7 @@ def main():
     group.add_argument("--no-show", action = "store_false", dest = "show", help = "don't show the result in a window")
     group.add_argument("--no-save", action = "store_false", dest = "save", help = "don't save the image")
 
-    parser.add_argument("--name", default = "mandelbrot_%(pixel_density)d.png", help = "name of the output file")
+    parser.add_argument("--name", default = "mandelbrot_%(pixel_density)d.jpg", help = "name of the output file")
     parser.add_argument("--pixel-density", type = int, help = "pixel density of the image")
     parser.add_argument("--type", choices = ("dots", "normal"), default = "dots", help = "painting type")
     parser.add_argument("--max-iterations", type = int, help = "maximum number of iterations for a pixel")

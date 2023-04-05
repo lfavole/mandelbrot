@@ -225,7 +225,7 @@ def main():
     parser.add_argument("--image-width", type = int, default = 512, help = "width of the image")
     parser.add_argument("--image-height", type = int, default = 512, help = "height of the image")
     parser.add_argument("--palette", type = Palette, default = Palette.gold(), help = "palette to use")
-    parser.add_argument("--name", type = str, default = "%(fractal)s_%(image_width)dx%(image_height)d_%(palette)s.png", help = "name of the output file")
+    parser.add_argument("--name", type = str, default = "%(fractal)s_%(image_width)dx%(image_height)d_%(palette)s.jpg", help = "name of the output file")
     parser.add_argument("--show-palette", action = "store_true", help = "show the palette")
     parser.add_argument("--no-progress", action = "store_false", dest = "progress", help = "don't output a progress bar")
 

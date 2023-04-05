@@ -76,7 +76,9 @@ def main():
     plt.tight_layout()
 
     if opts.save:
-        plt.savefig(opts.name, dpi = 300, backend = "agg")
+        plt.savefig(opts.name % {
+			"pixel_density": opts.pixel_density
+		}, dpi = 300, backend = "agg")
     if opts.show:
         plt.show()
 

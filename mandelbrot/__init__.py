@@ -118,8 +118,8 @@ def paint(mandelbrot_set: Fractal, viewport: Viewport, palette: Palette | list[t
         pixel.color = palette[int(stability * length_1)] if stability != 1 else (0, 0, 0)
 
 def show(
-    center: complex,
-    width: float,
+    center: complex = -0.75,
+    width: float = 3.5,
     max_iterations = 100,
     escape_radius: float = 2,
     fractal: str = "mandelbrot",
@@ -131,7 +131,7 @@ def show(
     image_width = 512,
     image_height = 512,
     brightness: float = 1,
-    show_image = True,
+    show_image = False,
 	progress = True,
 ):
     """

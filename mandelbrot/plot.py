@@ -71,6 +71,7 @@ def plot(
         path = "plot_tmp.jpg"
         plt.savefig(path, dpi = 300, backend = "agg")
         ret = Image.open(path)
+        ret.load()
         os.remove(path)
         return ret
     return None

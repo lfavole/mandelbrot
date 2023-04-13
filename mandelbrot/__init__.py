@@ -228,6 +228,7 @@ def main():
     parser.add_argument("--name", type = str, default = "%(fractal)s_%(image_width)dx%(image_height)d_%(palette)s.jpg", help = "name of the output file")
     parser.add_argument("--show-palette", action = "store_true", help = "show the palette")
     parser.add_argument("--no-progress", action = "store_false", dest = "progress", help = "don't output a progress bar")
+    parser.add_argument("--no-show", action = "store_false", dest = "show", help = "don't show the result in a window")
 
     opts = parser.parse_args()
 
@@ -272,6 +273,7 @@ def main():
         palette = opts.palette,
         image_width = opts.image_width,
         image_height = opts.image_height,
+        show_image = opts.show,
 		progress = opts.progress,
     )
 

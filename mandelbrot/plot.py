@@ -2,12 +2,15 @@
 Display the Mandelbrot set as a scatter plot with Matplotlib.
 """
 import argparse
+import os
+from typing import Literal
 import warnings
 from pathlib import Path
 
 import matplotlib.pyplot as plt
 import numpy as np
 from matplotlib.markers import MarkerStyle
+from PIL import Image
 
 warnings.filterwarnings("ignore")
 
@@ -37,6 +40,41 @@ def get_members(comp, num_iterations):
     mask = is_stable(comp, num_iterations)
     return comp[mask]
 
+def plot(
+    paint_type: Literal["dots", "normal"] = "dots",
+    pixel_density: int = 21,
+    path: Path | str | None = None,
+    show_image = False,
+):
+    matrix = complex_matrix(-2, 0.5, -1.5, 1.5, pixel_density = pixel_density)
+
+    if paint_type == "dots":
+        members = get_members(matrix, num_iterations = 20)
+        plt.scatter(members.real, members.imag, color = "black", marker = MarkerStyle(","), s = 1)
+    else:
+        plt.imshow(is_stable(matrix, num_iterations = 20), cmap = "binary")
+
+    plt.gca().set_aspect("equal")
+    plt.axis("off")
+    plt.tight_layout()
+
+    if path is not None:
+        plt.savefig(path, dpi = 300, backend = "agg")
+
+    if show_image:
+        if not path:
+            plt.show()
+        else:
+            os.startfile(path)
+
+    if path is None:
+        path = "plot_tmp.jpg"
+        plt.savefig(path, dpi = 300, backend = "agg")
+        ret = Image.open(path)
+        os.remove(path)
+        return ret
+    return None
+
 def main():
     parser = argparse.ArgumentParser(description = __doc__)
 
@@ -63,24 +101,16 @@ def main():
         else:
             opts.pixel_density = 512
 
-    matrix = complex_matrix(-2, 0.5, -1.5, 1.5, pixel_density = opts.pixel_density)
+    filename = opts.name % {
+        "pixel_density": opts.pixel_density
+    }
 
-    if opts.type == "dots":
-        members = get_members(matrix, num_iterations = 20)
-        plt.scatter(members.real, members.imag, color = "black", marker = MarkerStyle(","), s = 1)
-    else:
-        plt.imshow(is_stable(matrix, num_iterations = 20), cmap = "binary")
-
-    plt.gca().set_aspect("equal")
-    plt.axis("off")
-    plt.tight_layout()
-
-    if opts.save:
-        plt.savefig(opts.name % {
-			"pixel_density": opts.pixel_density
-		}, dpi = 300, backend = "agg")
-    if opts.show:
-        plt.show()
+    plot(
+        paint_type = opts.type,
+        pixel_density = opts.pixel_density,
+        path = filename,
+        show_image = opts.show,
+    )
 
 if __name__ == "__main__":
 	main()
